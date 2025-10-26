@@ -472,18 +472,18 @@ const Index = () => {
       // Pedidos Santo Amaro
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
-      doc.text("🏗️ Obra: Santo Amaro", 14, yPos);
+      doc.text("OBRA: SANTO AMARO", 14, yPos);
       yPos += 10;
 
       const pedidosSA = pedidos.filter((p) => p.obra === "Santo Amaro");
       const pedidosSABody = pedidosSA.map((p) => [
         p.numero_nfe || "-",
         new Date(p.data).toLocaleDateString("pt-BR"),
-        p.materiais.map(m => `• ${m}`).join("\n"),
+        p.materiais.map(m => `- ${m}`).join("\n"),
         `R$ ${p.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`,
-        p.arquivo_nfe_url ? "📎" : "-",
+        p.arquivo_nfe_url ? "Sim" : "-",
         p.numero_pedido,
-        p.tipo_operacao ? (p.tipo_operacao === 'retirada' ? '📦' : '🚚') : "-",
+        p.tipo_operacao ? (p.tipo_operacao === 'retirada' ? 'Retirada' : 'Entrega') : "-",
         p.data_operacao ? new Date(p.data_operacao).toLocaleDateString("pt-BR") : "-",
       ]);
 
@@ -514,7 +514,7 @@ const Index = () => {
       // Pedidos Pacaembu
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
-      doc.text("🏗️ Obra: Pacaembu", 14, yPos);
+      doc.text("OBRA: PACAEMBU", 14, yPos);
       yPos += 10;
 
       const pedidosPacaembu = pedidos.filter((p) => p.obra === "Pacaembu");
@@ -522,10 +522,10 @@ const Index = () => {
         p.numero_pedido,
         p.numero_nfe || "-",
         new Date(p.data).toLocaleDateString("pt-BR"),
-        p.materiais.map(m => `• ${m}`).join("\n"),
+        p.materiais.map(m => `- ${m}`).join("\n"),
         `R$ ${p.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`,
-        p.arquivo_nfe_url ? "📎" : "-",
-        p.tipo_operacao ? (p.tipo_operacao === 'retirada' ? '📦' : '🚚') : "-",
+        p.arquivo_nfe_url ? "Sim" : "-",
+        p.tipo_operacao ? (p.tipo_operacao === 'retirada' ? 'Retirada' : 'Entrega') : "-",
         p.data_operacao ? new Date(p.data_operacao).toLocaleDateString("pt-BR") : "-",
       ]);
 
