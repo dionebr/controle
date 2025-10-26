@@ -6,11 +6,14 @@ import { NotaFiscalForm } from "@/components/NotaFiscalForm";
 import { PedidosTable } from "@/components/PedidosTable";
 import { NotasFiscaisTable } from "@/components/NotasFiscaisTable";
 import { FinancialCard } from "@/components/FinancialCard";
-import { ExportButtons } from "@/components/ExportButtons";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, TrendingUp, TrendingDown, AlertCircle, LogOut, User, Shield } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Wallet, TrendingUp, TrendingDown, AlertCircle, LogOut, User, Shield, FileSpreadsheet, FileText, ChevronDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface Pedido {
@@ -329,6 +332,25 @@ const Index = () => {
                         </p>
                       </div>
                     </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="gap-2">
+                          <FileText className="h-4 w-4" />
+                          Relatórios
+                          <ChevronDown className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={exportarParaExcel}>
+                          <FileSpreadsheet className="h-4 w-4 mr-2" />
+                          Exportar para Excel
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={exportarParaPDF}>
+                          <FileText className="h-4 w-4 mr-2" />
+                          Exportar para PDF
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                     <Button
                       variant="outline"
                       size="sm"
@@ -465,13 +487,7 @@ const Index = () => {
           </Card>
         </div>
 
-        <ExportButtons
-          pedidos={pedidos}
-          notas={notas}
-          totalCredito={totalCredito}
-          totalPedidos={totalPedidos}
-          saldo={saldoGeral}
-        />
+
 
         {isAdmin && (
           <NotaFiscalForm
