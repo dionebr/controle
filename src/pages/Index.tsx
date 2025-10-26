@@ -52,6 +52,7 @@ const Index = () => {
   const [valor, setValor] = useState("");
   const [nfePedido, setNfePedido] = useState("");
   const [arquivoNfePedido, setArquivoNfePedido] = useState<File | null>(null);
+  const [canhotoPedido, setCanhotoPedido] = useState<File | null>(null);
   const [tipoOperacao, setTipoOperacao] = useState("");
   const [dataOperacao, setDataOperacao] = useState("");
 
@@ -61,7 +62,6 @@ const Index = () => {
   const [valorNfe, setValorNfe] = useState("");
   const [obraNota, setObraNota] = useState("");
   const [arquivo, setArquivo] = useState<File | null>(null);
-  const [canhoto, setCanhoto] = useState<File | null>(null);
 
   // Carregar dados do banco
   useEffect(() => {
@@ -94,6 +94,7 @@ const Index = () => {
     }
 
     let arquivoNfeUrl: string | null = null;
+    let canhotoUrl: string | null = null;
 
     // Upload do arquivo NFe se existir
     if (arquivoNfePedido) {
@@ -112,11 +113,29 @@ const Index = () => {
       arquivoNfeUrl = publicUrl;
     }
 
+    // Upload do canhoto se existir
+    if (canhotoPedido) {
+      const fileExt = canhotoPedido.name.split(".").pop();
+      const fileName = `canhoto_${pedido}_${Date.now()}.${fileExt}`;
+      const filePath = fileName;
+
+      const { error: uploadError } = await supabase.storage.from("notas-fiscais").upload(filePath, canhotoPedido);
+
+      if (uploadError) {
+        toast({ variant: "destructive", title: "Erro ao fazer upload do canhoto", description: uploadError.message });
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage.from("notas-fiscais").getPublicUrl(filePath);
+      canhotoUrl = publicUrl;
+    }
+
     const { error } = await supabase.from("pedidos").insert({
       obra,
       numero_pedido: pedido,
       numero_nfe: nfePedido || null,
       arquivo_nfe_url: arquivoNfeUrl,
+      canhoto_url: canhotoUrl,
       data,
       materiais: material.split(",").map((m) => m.trim()),
       valor: parseFloat(valor),
@@ -133,6 +152,7 @@ const Index = () => {
       setValor("");
       setNfePedido("");
       setArquivoNfePedido(null);
+      setCanhotoPedido(null);
       carregarPedidos();
     }
   };
@@ -366,6 +386,7 @@ const Index = () => {
             valor={valor}
             nfe={nfePedido}
             arquivoNfe={arquivoNfePedido}
+            canhoto={canhotoPedido}
             tipoOperacao={tipoOperacao}
             dataOperacao={dataOperacao}
             setObra={setObra}
@@ -375,6 +396,7 @@ const Index = () => {
             setValor={setValor}
             setNfe={setNfePedido}
             setArquivoNfe={setArquivoNfePedido}
+            setCanhoto={setCanhotoPedido}
             setTipoOperacao={setTipoOperacao}
             setDataOperacao={setDataOperacao}
             onSubmit={adicionarPedido}
@@ -458,13 +480,11 @@ const Index = () => {
             valorNfe={valorNfe}
             obra={obraNota}
             arquivo={arquivo}
-            canhoto={canhoto}
             setNfe={setNfe}
             setDataNfe={setDataNfe}
             setValorNfe={setValorNfe}
             setObra={setObraNota}
             setArquivo={setArquivo}
-            setCanhoto={setCanhoto}
             onSubmit={adicionarNota}
           />
         )}

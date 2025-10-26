@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Paperclip } from "lucide-react";
+import { Plus, Paperclip, Upload } from "lucide-react";
 import { useRef } from "react";
 
 interface PedidoFormProps {
@@ -14,6 +14,7 @@ interface PedidoFormProps {
   valor: string;
   nfe: string;
   arquivoNfe: File | null;
+  canhoto: File | null;
   tipoOperacao: string;
   dataOperacao: string;
   setObra: (value: string) => void;
@@ -23,6 +24,7 @@ interface PedidoFormProps {
   setValor: (value: string) => void;
   setNfe: (value: string) => void;
   setArquivoNfe: (file: File | null) => void;
+  setCanhoto: (file: File | null) => void;
   setTipoOperacao: (value: string) => void;
   setDataOperacao: (value: string) => void;
   onSubmit: () => void;
@@ -36,6 +38,7 @@ export const PedidoForm = ({
   valor,
   nfe,
   arquivoNfe,
+  canhoto,
   tipoOperacao,
   dataOperacao,
   setObra,
@@ -45,15 +48,22 @@ export const PedidoForm = ({
   setValor,
   setNfe,
   setArquivoNfe,
+  setCanhoto,
   setTipoOperacao,
   setDataOperacao,
   onSubmit,
 }: PedidoFormProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const canhotInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setArquivoNfe(file);
+  };
+
+  const handleCanhotChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    setCanhoto(file);
   };
 
   return (
@@ -123,6 +133,23 @@ export const PedidoForm = ({
             {arquivoNfe && (
               <span className="text-sm text-muted-foreground">
                 {arquivoNfe.name} ({(arquivoNfe.size / 1024).toFixed(2)} KB)
+              </span>
+            )}
+            
+            <input
+              type="file"
+              ref={canhotInputRef}
+              onChange={handleCanhotChange}
+              accept=".jpg,.jpeg,.png,.webp,.pdf"
+              className="hidden"
+            />
+            <Button type="button" variant="outline" onClick={() => canhotInputRef.current?.click()}>
+              <Upload className="h-4 w-4 mr-2" />
+              Anexar Canhoto
+            </Button>
+            {canhoto && (
+              <span className="text-sm text-muted-foreground">
+                {canhoto.name} ({(canhoto.size / 1024).toFixed(2)} KB)
               </span>
             )}
           </div>
