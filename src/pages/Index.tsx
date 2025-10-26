@@ -725,13 +725,13 @@ const Index = () => {
               <div className="p-4 bg-white">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Crédito</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">CONTA CORRENTE</p>
                     <p className="text-lg font-black text-green-600 whitespace-nowrap">
                       R$ {totalCreditoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
                   </div>
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Pedidos</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">CONCONTA CORRENTE</p>
                     <p className="text-lg font-black text-blue-600 whitespace-nowrap">
                       R$ {totalPedidosPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
@@ -759,13 +759,13 @@ const Index = () => {
               <div className="p-4 bg-white">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Crédito</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">CONTA CORRENTE</p>
                     <p className="text-lg font-black text-green-600 whitespace-nowrap">
                       R$ {totalCreditoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
                   </div>
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Pedidos</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">USADO</p>
                     <p className="text-lg font-black text-blue-600 whitespace-nowrap">
                       R$ {totalPedidosPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
