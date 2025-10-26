@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Wallet, TrendingUp, TrendingDown, AlertCircle, LogOut, User, Shield, FileSpreadsheet, FileText, ChevronDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNotificationSound } from "@/hooks/useNotificationSound";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -42,6 +43,7 @@ interface NotaFiscal {
 
 const Index = () => {
   const { toast } = useToast();
+  const { playAddSound } = useNotificationSound();
   const { user, isAdmin, userRole, signOut, loading } = useAuth();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [notas, setNotas] = useState<NotaFiscal[]>([]);
@@ -148,6 +150,7 @@ const Index = () => {
       toast({ variant: "destructive", title: "Erro ao adicionar pedido", description: error.message });
     } else {
       toast({ title: "Sucesso!", description: "Pedido adicionado com sucesso." });
+      playAddSound(); // Tocar som de notificação
       setObra("");
       setPedido("");
       setData("");
@@ -230,6 +233,7 @@ const Index = () => {
       toast({ variant: "destructive", title: "Erro ao adicionar nota", description: error.message });
     } else {
       toast({ title: "Sucesso!", description: "Nota fiscal adicionada com sucesso." });
+      playAddSound(); // Tocar som de notificação
       setNfe("");
       setDataNfe("");
       setValorNfe("");
