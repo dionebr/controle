@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, Edit, Trash2, FileText, Download, Eye } from "lucide-react";
+import { Building2, Edit, Trash2, FileText, Download, Eye, List, Upload } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 
 interface Pedido {
@@ -30,6 +30,8 @@ interface PedidosTableProps {
 export const PedidosTable = ({ obraNome, pedidos, onEdit, onDelete, total }: PedidosTableProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [materiaisModal, setMateriaisModal] = useState<{ pedido: string; materiais: string[] } | null>(null);
+  const [isMateriaisOpen, setIsMateriaisOpen] = useState(false);
 
   const handlePreview = (url: string) => {
     setPreviewUrl(url);
@@ -41,6 +43,11 @@ export const PedidosTable = ({ obraNome, pedidos, onEdit, onDelete, total }: Ped
     link.href = url;
     link.download = `nfe_${nfe}`;
     link.click();
+  };
+
+  const handleMateriaisClick = (pedido: string, materiais: string[]) => {
+    setMateriaisModal({ pedido, materiais });
+    setIsMateriaisOpen(true);
   };
 
   return (
@@ -60,9 +67,10 @@ export const PedidosTable = ({ obraNome, pedidos, onEdit, onDelete, total }: Ped
                   <th className="text-left p-3 font-semibold">Pedido</th>
                   <th className="text-left p-3 font-semibold">NF-e</th>
                   <th className="text-left p-3 font-semibold">Data</th>
-                  <th className="text-left p-3 font-semibold">Materiais</th>
+                  <th className="text-center p-3 font-semibold">Materiais</th>
                   <th className="text-right p-3 font-semibold">Valor (R$)</th>
-                  <th className="text-center p-3 font-semibold">Anexo</th>
+                  <th className="text-center p-3 font-semibold">Anexo NFe</th>
+                  <th className="text-center p-3 font-semibold">Canhoto</th>
                   {(onEdit || onDelete) && (
                     <th className="text-center p-3 font-semibold">Ações</th>
                   )}
@@ -74,14 +82,16 @@ export const PedidosTable = ({ obraNome, pedidos, onEdit, onDelete, total }: Ped
                     <td className="p-3 font-medium">{p.numero_pedido}</td>
                     <td className="p-3">{p.numero_nfe || "-"}</td>
                     <td className="p-3">{new Date(p.data).toLocaleDateString('pt-BR')}</td>
-                    <td className="p-3">
-                      <div className="flex flex-wrap gap-1 max-w-md">
-                        {p.materiais.map((m, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs whitespace-nowrap">
-                            {m}
-                          </Badge>
-                        ))}
-                      </div>
+                    <td className="p-3 text-center">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        onClick={() => handleMateriaisClick(p.numero_pedido, p.materiais)}
+                        className="gap-2"
+                      >
+                        <List className="h-3 w-3" />
+                        Ver Materiais ({p.materiais.length})
+                      </Button>
                     </td>
                     <td className="p-3 text-right font-semibold">{p.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td className="p-3">
@@ -91,6 +101,20 @@ export const PedidosTable = ({ obraNome, pedidos, onEdit, onDelete, total }: Ped
                             <Eye className="h-3 w-3" />
                           </Button>
                           <Button size="sm" variant="ghost" onClick={() => handleDownload(p.arquivo_nfe_url!, p.numero_nfe || p.numero_pedido)}>
+                            <Download className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="text-center text-muted-foreground">-</div>
+                      )}
+                    </td>
+                    <td className="p-3">
+                      {p.canhoto_url ? (
+                        <div className="flex justify-center gap-1">
+                          <Button size="sm" variant="ghost" onClick={() => handlePreview(p.canhoto_url!)}>
+                            <Eye className="h-3 w-3" />
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={() => handleDownload(p.canhoto_url!, `canhoto_${p.numero_pedido}`)}>
                             <Download className="h-3 w-3" />
                           </Button>
                         </div>
@@ -129,10 +153,11 @@ export const PedidosTable = ({ obraNome, pedidos, onEdit, onDelete, total }: Ped
         </CardContent>
       </Card>
 
+      {/* Modal de Preview */}
       <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh]">
           <DialogHeader>
-            <DialogTitle>Preview NF-e</DialogTitle>
+            <DialogTitle>Preview Arquivo</DialogTitle>
           </DialogHeader>
           <div className="overflow-auto max-h-[calc(90vh-100px)]">
             {previewUrl && (
@@ -141,6 +166,44 @@ export const PedidosTable = ({ obraNome, pedidos, onEdit, onDelete, total }: Ped
               ) : (
                 <img src={previewUrl} alt="Preview" className="w-full h-auto" />
               )
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de Materiais */}
+      <Dialog open={isMateriaisOpen} onOpenChange={setIsMateriaisOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <List className="h-5 w-5" />
+              Materiais do Pedido {materiaisModal?.pedido}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            {materiaisModal?.materiais && materiaisModal.materiais.length > 0 ? (
+              <>
+                <div className="text-sm text-muted-foreground">
+                  Total de {materiaisModal.materiais.length} {materiaisModal.materiais.length === 1 ? 'item' : 'itens'}
+                </div>
+                <div className="grid gap-2 max-h-[400px] overflow-y-auto">
+                  {materiaisModal.materiais.map((material, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                      <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                        <span className="text-sm font-semibold text-primary">{index + 1}</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium">{material.trim()}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-8 text-muted-foreground">
+                <List className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>Nenhum material encontrado</p>
+              </div>
             )}
           </div>
         </DialogContent>
