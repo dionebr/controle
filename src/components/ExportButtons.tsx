@@ -241,7 +241,7 @@ export const ExportButtons = ({ pedidos, notas, totalCredito, totalPedidos, sald
       // Pedidos Santo Amaro (formato da interface)
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
-      doc.text("🏗️ Obra: Santo Amaro", 14, yPos);
+      doc.text("Obra: Santo Amaro", 14, yPos);
       yPos += 10;
 
       const pedidosSA = pedidos.filter((p) => p.obra === "Santo Amaro");
@@ -289,7 +289,7 @@ export const ExportButtons = ({ pedidos, notas, totalCredito, totalPedidos, sald
       // Pedidos Pacaembu (formato da interface)
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
-      doc.text("🏗️ Obra: Pacaembu", 14, yPos);
+      doc.text("Obra: Pacaembu", 14, yPos);
       yPos += 10;
 
       const pedidosPacaembu = pedidos.filter((p) => p.obra === "Pacaembu");

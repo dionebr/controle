@@ -718,7 +718,7 @@ const Index = () => {
             <CardContent className="p-0">
               <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-5">
                 <div className="text-center">
-                  <h3 className="text-2xl font-extrabold tracking-tight">🏗️ Santo Amaro</h3>
+                  <h3 className="text-2xl font-extrabold tracking-tight">Santo Amaro</h3>
                   <p className="text-green-100 text-base font-medium mt-1">Resumo Financeiro</p>
                 </div>
               </div>
@@ -752,7 +752,7 @@ const Index = () => {
             <CardContent className="p-0">
               <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-5">
                 <div className="text-center">
-                  <h3 className="text-2xl font-extrabold tracking-tight">🏗️ Pacaembu</h3>
+                  <h3 className="text-2xl font-extrabold tracking-tight">Pacaembu</h3>
                   <p className="text-red-100 text-base font-medium mt-1">Resumo Financeiro</p>
                 </div>
               </div>
