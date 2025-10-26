@@ -725,13 +725,13 @@ const Index = () => {
               <div className="p-4 bg-white">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">CONTA CORRENTE</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Crédito</p>
                     <p className="text-lg font-black text-green-600 whitespace-nowrap">
                       R$ {totalCreditoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
                   </div>
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">CONCONTA CORRENTE</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Pedidos</p>
                     <p className="text-lg font-black text-blue-600 whitespace-nowrap">
                       R$ {totalPedidosPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
@@ -752,20 +752,20 @@ const Index = () => {
             <CardContent className="p-0">
               <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-5">
                 <div className="text-center">
-                  <h3 className="text-2xl font-extrabold tracking-tight">Pacaembu</h3>
+                  <h3 className="text-2xl font-extrabold tracking-tight">🏗️ Pacaembu</h3>
                   <p className="text-red-100 text-base font-medium mt-1">Resumo Financeiro</p>
                 </div>
               </div>
               <div className="p-4 bg-white">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">CONTA CORRENTE</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Crédito</p>
                     <p className="text-lg font-black text-green-600 whitespace-nowrap">
                       R$ {totalCreditoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
                   </div>
                   <div className="text-center px-2">
-                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">USADO</p>
+                    <p className="text-sm text-gray-600 uppercase tracking-wider font-semibold mb-2">Pedidos</p>
                     <p className="text-lg font-black text-blue-600 whitespace-nowrap">
                       R$ {totalPedidosPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </p>
