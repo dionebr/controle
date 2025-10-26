@@ -711,20 +711,81 @@ const Index = () => {
           />
         )}
 
-        {/* Resumo por Obra */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <FinancialCard 
-            title={`Santo Amaro - Crédito: R$ ${totalCreditoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Pedidos: R$ ${totalPedidosPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Saldo: R$ ${saldoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`} 
-            value={totalCreditoPorObra("Santo Amaro")} 
-            icon={Wallet} 
-            variant="success" 
-          />
-          <FinancialCard 
-            title={`Pacaembu - Crédito: R$ ${totalCreditoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Pedidos: R$ ${totalPedidosPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Saldo: R$ ${saldoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`} 
-            value={totalCreditoPorObra("Pacaembu")} 
-            icon={Wallet} 
-            variant="destructive" 
-          />
+        {/* Resumo por Obra - Cards Customizados */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Santo Amaro */}
+          <Card className="overflow-hidden shadow-lg border-l-4 border-l-green-500">
+            <CardContent className="p-0">
+              <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold">🏗️ Santo Amaro</h3>
+                    <p className="text-green-100 text-sm">Resumo Financeiro</p>
+                  </div>
+                  <Wallet className="h-8 w-8 text-green-100" />
+                </div>
+              </div>
+              <div className="p-4 bg-white">
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Crédito</p>
+                    <p className="text-lg font-bold text-green-600">
+                      R$ {totalCreditoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Pedidos</p>
+                    <p className="text-lg font-bold text-blue-600">
+                      R$ {totalPedidosPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Saldo</p>
+                    <p className={`text-lg font-bold ${saldoPorObra("Santo Amaro") >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      R$ {saldoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Pacaembu */}
+          <Card className="overflow-hidden shadow-lg border-l-4 border-l-red-500">
+            <CardContent className="p-0">
+              <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold">🏗️ Pacaembu</h3>
+                    <p className="text-red-100 text-sm">Resumo Financeiro</p>
+                  </div>
+                  <Wallet className="h-8 w-8 text-red-100" />
+                </div>
+              </div>
+              <div className="p-4 bg-white">
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Crédito</p>
+                    <p className="text-lg font-bold text-green-600">
+                      R$ {totalCreditoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Pedidos</p>
+                    <p className="text-lg font-bold text-blue-600">
+                      R$ {totalPedidosPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Saldo</p>
+                    <p className={`text-lg font-bold ${saldoPorObra("Pacaembu") >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      R$ {saldoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
 
