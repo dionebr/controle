@@ -711,67 +711,23 @@ const Index = () => {
           />
         )}
 
-        {/* Resumo Geral Simplificado */}
-        <div className="grid md:grid-cols-3 gap-4">
-          <FinancialCard title="💰 Crédito Total" value={totalCredito} icon={Wallet} variant="success" />
-          <FinancialCard title="📦 Pedidos Total" value={totalPedidos} icon={TrendingUp} variant="primary" />
-          <FinancialCard title="💸 Saldo Geral" value={saldoGeral} icon={TrendingDown} variant="default" />
+        {/* Resumo por Obra */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <FinancialCard 
+            title={`Santo Amaro - Crédito: R$ ${totalCreditoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Pedidos: R$ ${totalPedidosPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Saldo: R$ ${saldoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`} 
+            value={totalCreditoPorObra("Santo Amaro")} 
+            icon={Wallet} 
+            variant="success" 
+          />
+          <FinancialCard 
+            title={`Pacaembu - Crédito: R$ ${totalCreditoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Pedidos: R$ ${totalPedidosPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })} | Saldo: R$ ${saldoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`} 
+            value={totalCreditoPorObra("Pacaembu")} 
+            icon={Wallet} 
+            variant="destructive" 
+          />
         </div>
 
-        {/* Resumo por Obra - Compacto */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Santo Amaro */}
-          <Card>
-            <CardContent className="p-4">
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                🏗️ Santo Amaro
-                <span className={`text-sm px-2 py-1 rounded ${saldoPorObra("Santo Amaro") >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  R$ {saldoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </h3>
-              <div className="grid grid-cols-3 gap-2 text-sm">
-                <div className="text-center">
-                  <p className="text-green-600 font-medium">Crédito</p>
-                  <p className="font-bold">R$ {totalCreditoPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-blue-600 font-medium">Pedidos</p>
-                  <p className="font-bold">R$ {totalPedidosPorObra("Santo Amaro").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-gray-600 font-medium">% Total</p>
-                  <p className="font-bold">{totalCredito > 0 ? ((totalCreditoPorObra("Santo Amaro") / totalCredito * 100).toFixed(1)) : 0}%</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* Pacaembu */}
-          <Card>
-            <CardContent className="p-4">
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                🏗️ Pacaembu
-                <span className={`text-sm px-2 py-1 rounded ${saldoPorObra("Pacaembu") >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  R$ {saldoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </h3>
-              <div className="grid grid-cols-3 gap-2 text-sm">
-                <div className="text-center">
-                  <p className="text-green-600 font-medium">Crédito</p>
-                  <p className="font-bold">R$ {totalCreditoPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-blue-600 font-medium">Pedidos</p>
-                  <p className="font-bold">R$ {totalPedidosPorObra("Pacaembu").toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-gray-600 font-medium">% Total</p>
-                  <p className="font-bold">{totalCredito > 0 ? ((totalCreditoPorObra("Pacaembu") / totalCredito * 100).toFixed(1)) : 0}%</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
 
 
